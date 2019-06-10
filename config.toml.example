@@ -1,0 +1,7 @@
+host = "localhost"
+port = "5432"
+user = "web"
+password = "123456789"
+dbname = "pqgotest"
+sslmode = "disable"
+memcache = "10.184.72.203:11211"
