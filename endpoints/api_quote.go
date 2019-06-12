@@ -12,7 +12,7 @@ import (
 )
 
 var GetAllQuotesSQL = "SELECT quote.quote_id, member.fname, member.sname, quote.text, quote.date, quote.suspended" +
-	" FROM people.quote INNER JOIN public.member ON quote.source = member.memberid;"
+	" FROM people.quote INNER JOIN public.member ON quote.source = member.memberid ORDER BY quote.date DESC;"
 
 var GetAllQuotesBaseKey = "SQL:GetAllQuotes"
 
