@@ -39,4 +39,10 @@ var routes = Routes{
 		"/API",
 		ep.Index,
 	},
+	Route{
+		"GetAllQuotes",
+		"GET",
+		"/API/quotes",
+		ep.GetAllQuotes,
+	},
 }
