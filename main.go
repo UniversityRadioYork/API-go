@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"os"
 	"log"
 	"net/http"
@@ -9,13 +10,14 @@ import (
 )
 
 func main() {
-	f, err := os.OpenFile("APIgo.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	f, err := os.OpenFile("API-go.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
 	if err != nil{
 		log.Println(err)
 	}
 	defer f.Close()
-	log.SetFlags(log.Llongfile)
-	log.SetOutput(f)
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+	multi :=  io.MultiWriter(f, os.Stdout)
+	log.SetOutput(multi)
 
 	log.Printf("API started")
 
