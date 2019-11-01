@@ -29,5 +29,6 @@ func main() {
 	ut.NewMemcacheClient(config)
 
 	router := NewRouter()
-	log.Fatal(http.ListenAndServe(":8080", router))
+	portString := ":" + config.ServerPort
+	log.Fatal(http.ListenAndServe(portString, router))
 }

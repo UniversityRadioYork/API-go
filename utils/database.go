@@ -12,7 +12,7 @@ var Database *sql.DB
 func databaseConnection(c *Config) (*sql.DB) {
 	connstr := fmt.Sprintf("host=%s port=%s user=%s "+
     	"password=%s dbname=%s sslmode=disable",
-		c.Host, c.Port, c.User, c.Password, c.DBName)
+		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
 	db, err := sql.Open("postgres", connstr)
 	if err != nil {
 		log.Fatal(err)
