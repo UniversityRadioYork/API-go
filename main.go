@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io"
+	"os"
 	"log"
 	"net/http"
 	"github.com/BurntSushi/toml"
@@ -8,10 +10,19 @@ import (
 )
 
 func main() {
+	f, err := os.OpenFile("API-go.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	if err != nil{
+		log.Println(err)
+	}
+	defer f.Close()
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+	multi :=  io.MultiWriter(f, os.Stdout)
+	log.SetOutput(multi)
+
 	log.Printf("API started")
 
 	config := &ut.Config{}
-	_, err := toml.DecodeFile("config.toml", config)
+	_, err = toml.DecodeFile("config.toml", config)
 	if err != nil {
 		log.Fatal(err)
 	}
