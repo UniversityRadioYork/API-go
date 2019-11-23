@@ -1,17 +1,17 @@
 package utils
 
 import (
-	"fmt"
-	"log"
 	"database/sql"
+	"fmt"
 	_ "github.com/lib/pq"
+	"log"
 )
 
 var Database *sql.DB
 
-func databaseConnection(c *Config) (*sql.DB) {
+func databaseConnection(c *Config) *sql.DB {
 	connstr := fmt.Sprintf("host=%s port=%s user=%s "+
-    	"password=%s dbname=%s sslmode=disable",
+		"password=%s dbname=%s sslmode=disable",
 		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
 	db, err := sql.Open("postgres", connstr)
 	if err != nil {
