@@ -1,17 +1,17 @@
 package main
 
 import (
-	"net/http"
-	"github.com/gorilla/mux"
-	ut "github.com/UniversityRadioYork/API-go/utils"
 	ep "github.com/UniversityRadioYork/API-go/endpoints"
+	ut "github.com/UniversityRadioYork/API-go/utils"
+	"github.com/gorilla/mux"
+	"net/http"
 )
 
 type Route struct {
-	Name		string
-	Method		string
-	Pattern		string
-	HandlerFunc	http.HandlerFunc
+	Name        string
+	Method      string
+	Pattern     string
+	HandlerFunc http.HandlerFunc
 }
 
 type Routes []Route
@@ -36,13 +36,13 @@ var routes = Routes{
 	Route{
 		"Index",
 		"GET",
-		"/API",
+		"/",
 		ep.Index,
 	},
 	Route{
 		"GetAllQuotes",
 		"GET",
-		"/API/quotes",
+		"/quotes",
 		ep.GetAllQuotes,
 	},
 }
