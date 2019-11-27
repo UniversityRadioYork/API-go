@@ -36,13 +36,13 @@ var routes = Routes{
 	Route{
 		"Index",
 		"GET",
-		"apigo/",
+		"/",
 		ep.Index,
 	},
 	Route{
 		"GetAllQuotes",
 		"GET",
-		"apigo/quotes",
+		"/quotes",
 		ep.GetAllQuotes,
 	},
 }
