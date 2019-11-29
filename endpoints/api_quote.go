@@ -1,14 +1,14 @@
 package endpoints
 
 import (
-	"log"
-	"net/http"
 	"bytes"
 	"encoding/gob"
 	"encoding/json"
-	memcache "github.com/bradfitz/gomemcache/memcache"
 	md "github.com/UniversityRadioYork/API-go/models"
 	ut "github.com/UniversityRadioYork/API-go/utils"
+	memcache "github.com/bradfitz/gomemcache/memcache"
+	"log"
+	"net/http"
 )
 
 var GetAllQuotesSQL = "SELECT quote.quote_id, member.fname, member.sname, quote.text, quote.date, quote.suspended" +
@@ -27,15 +27,29 @@ func GetAllQuotes(w http.ResponseWriter, r *http.Request) {
 		rows, err := ut.Database.Query(GetAllQuotesSQL)
 		if err != nil {
 			log.Print(err)
+			w.WriteHeader(500)
+			json.NewEncoder(w).Encode(md.APIError{
+				OK:        false,
+				ErrorCode: "database_fail",
+				ErrorInfo: nil,
+			})
+			return
 		}
 		defer rows.Close()
 		//Move results into struct
 		for rows.Next() {
 			var quote md.Quote
-			err := rows.Scan(&quote.QuoteId, &quote.FName, &quote.SName, 
+			err := rows.Scan(&quote.QuoteId, &quote.FName, &quote.SName,
 				&quote.Text, &quote.Date, &quote.Suspended)
 			if err != nil {
 				log.Print(err)
+				w.WriteHeader(500)
+				json.NewEncoder(w).Encode(md.APIError{
+					OK:        false,
+					ErrorCode: "database_fail",
+					ErrorInfo: nil,
+				})
+				return
 			}
 			quotes = append(quotes, quote)
 		}
@@ -52,5 +66,8 @@ func GetAllQuotes(w http.ResponseWriter, r *http.Request) {
 	}
 	//Encode struct into json and respond to request
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	json.NewEncoder(w).Encode(quotes)
+	json.NewEncoder(w).Encode(md.APIResponse{
+		OK:   true,
+		Data: quotes,
+	})
 }
